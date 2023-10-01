@@ -5,9 +5,9 @@ import contactsService from "../../models/contacts.js";
 const router = express.Router();
 
 const contactsAddSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string(),
 });
 router.get("/", async (req, res, next) => {
   try {
@@ -75,17 +75,6 @@ router.delete("/:contactId", async (req, res, next) => {
 
 router.put("/:contactId", async (req, res, next) => {
   try {
-    if (!Object.keys(req.body).length) {
-      const error = new Error("All fields empty");
-      error.status = 404;
-      throw error;
-    }
-    const { err } = contactsAddSchema.validate(req.body);
-    if (err) {
-      const error = new Error("missing fields");
-      error.status = 400;
-      throw error;
-    }
     const { contactId } = req.params;
     const result = await contactsService.updateContact(contactId, req.body);
     if (!result) {
