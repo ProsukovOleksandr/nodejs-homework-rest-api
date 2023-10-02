@@ -5,9 +5,9 @@ import contactsService from "../../models/contacts.js";
 const router = express.Router();
 
 const contactsAddSchema = Joi.object({
-  name: Joi.string(),
-  email: Joi.string(),
-  phone: Joi.string(),
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  phone: Joi.string().required(),
 });
 router.get("/", async (req, res, next) => {
   try {
@@ -42,8 +42,8 @@ router.post("/", async (req, res, next) => {
       error.status = 404;
       throw error;
     }
-    const { err } = contactsAddSchema.validate(req.body);
-    if (err) {
+    const { error } = contactsAddSchema.validate(req.body);
+    if (error) {
       const error = new Error("missing required name field");
       error.status = 404;
       throw error;
