@@ -9,6 +9,11 @@ const contactsAddSchema = Joi.object({
   email: Joi.string().required(),
   phone: Joi.string().required(),
 });
+const contactsPutSchema = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string(),
+});
 router.get("/", async (req, res, next) => {
   try {
     const result = await contactsService.listContacts();
@@ -76,6 +81,12 @@ router.delete("/:contactId", async (req, res, next) => {
 router.put("/:contactId", async (req, res, next) => {
   try {
     const { contactId } = req.params;
+    const { error } = contactsPutSchema.validate(req.body);
+    if (error) {
+      const error = new Error("Wrong content type");
+      error.status = 404;
+      throw error;
+    }
     const result = await contactsService.updateContact(contactId, req.body);
     if (!result) {
       const error = new Error(`Not found`);
