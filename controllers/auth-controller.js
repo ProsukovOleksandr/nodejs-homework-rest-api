@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-//import gravatar from  "gravatar";
 import Jimp from "jimp"
 import User from "../models/User.js";
 import HttpError from "../helpers/HttpError.js";
