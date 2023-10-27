@@ -4,8 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import router from "./routes/api/contacts.js";
 import authRouter from "./routes/api/auth-router.js";
-dotenv.config();
 
+dotenv.config();
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
